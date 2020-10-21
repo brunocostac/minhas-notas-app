@@ -1,6 +1,6 @@
 # Minhas notas (minhas-notas)
 
-Um aplicativo de notas feito com Vue.JS, Framework Quasar e IndexedDB
+A notes app made with Vue.JS, Framework Quasar and the local database IndexedDB
 
 ## Install the dependencies
 ```bash

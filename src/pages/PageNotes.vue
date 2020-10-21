@@ -16,7 +16,7 @@
                 </template>
                 <q-item>
                   <q-item-side>
-                    <q-radio v-if="showRadioButton" v-model="checkBoxState" color="amber" val="line"/>
+                    <q-radio v-if="showRadioButton" v-model="radioButtonState" color="amber" val="line"/>
                   </q-item-side>
                   <q-item-section>
                     <q-item-label>Estudar Javascript</q-item-label>
@@ -33,7 +33,7 @@
                 </template>
                 <q-item>
                   <q-item-side>
-                    <q-radio v-if="showRadioButton" v-model="checkBoxState" color="amber" val="2"/>
+                    <q-radio v-if="showRadioButton" v-model="radioButtonState" color="amber" val="2"/>
                   </q-item-side>
                   <q-item-section>
                     <q-item-label>Estudar Vue.js</q-item-label>
@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       showRadioButton: false,
-      checkBoxState: false
+      radioButtonState: false
     }
   },
   methods: {

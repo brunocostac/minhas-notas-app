@@ -1,6 +1,11 @@
 # Minhas notas (minhas-notas)
 
-A notes app made with Vue.JS, Framework Quasar and the local database IndexedDB
+## Dependencies
+
+    Vue.JS - Frontend Framework
+    Quasar - Framework based on Vue.js
+    LocalBase - Firebase style DB for offline storage
+
 
 ## Install the dependencies
 ```bash

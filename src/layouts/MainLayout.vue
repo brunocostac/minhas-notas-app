@@ -24,33 +24,33 @@
       content-class="bg-grey-1"
     >
       <div class="q-pa-sm fixed-top-right on-left">
-          <q-btn @click="showRadioButton = !showRadioButton" dense unelevated size="12px" color="white" text-color="amber" label="Editar" />
+          <q-btn @click="showRadioButtons = !showRadioButtons" dense unelevated size="12px" color="white" text-color="amber" label="Editar" />
       </div>
       <h5 class="text-h5 text-weight-bold on-right">Pastas</h5>
       <q-scroll-area class="fit">
           <q-list bordered separator>
             <q-item clickable v-ripple>
-              <q-item-side>
-                <q-radio v-if="showRadioButton" v-model="radioButtonState" color="amber" val="1"/>
-              </q-item-side>
+              <q-item-section side>
+                <q-radio v-if="showRadioButtons" v-model="folderValue" color="amber" val="1"/>
+              </q-item-section>
               <q-item-section>
                 <q-item-label>Estudos</q-item-label>
               </q-item-section>
             </q-item>
 
             <q-item clickable v-ripple>
-              <q-item-side>
-                <q-radio v-if="showRadioButton" v-model="radioButtonState" color="amber" val="2"/>
-              </q-item-side>
+              <q-item-section side>
+                <q-radio v-if="showRadioButtons" v-model="folderValue" color="amber" val="2"/>
+              </q-item-section>
               <q-item-section>
                 <q-item-label>Churrasco</q-item-label>              
               </q-item-section>
             </q-item>
 
             <q-item clickable v-ripple>
-              <q-item-side>
-                <q-radio v-if="showRadioButton" v-model="radioButtonState" color="amber" val="3"/>
-              </q-item-side>
+              <q-item-section side>
+                <q-radio v-if="showRadioButtons" v-model="folderValue" color="amber" val="3"/>
+              </q-item-section>
               <q-item-section>
                 <q-item-label>Dentista</q-item-label>
               </q-item-section>
@@ -58,25 +58,49 @@
           </q-list>
       </q-scroll-area>
       <div class="q-pa-sm fixed-bottom-right on-left">
-          <q-btn dense unelevated size="12px" color="white" text-color="amber" label="Nova pasta" />
+          <q-btn @click="showAddFolder = true" dense unelevated size="12px" color="white" text-color="amber" label="Nova pasta" />
       </div>
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-dialog v-model="showAddFolder" persistent>
+        <add-folder-modal></add-folder-modal>
+    </q-dialog>
+   
+    <q-dialog v-model="showEditFolder" persistent>
+        <edit-folder-modal @reset="resetFolderValue"></edit-folder-modal>
+    </q-dialog>
+   
   </q-layout>
 </template>
 
 <script>
-
 export default {
   name: 'MainLayout',
+  components: {
+    'add-folder-modal' : require('components/Folders/Modals/AddFolder.vue').default,
+    'edit-folder-modal': require('components/Folders/Modals/EditFolder.vue').default
+  },
   data () {
     return {
       leftDrawerOpen: false,
-      showRadioButton: false,
-      radioButtonState: false
+      showRadioButtons: false,
+      showAddFolder: false,
+      folderValue: ''
+    }
+  },
+  computed: {
+    showEditFolder() {
+      return this.folderValue == '' ? false : true
+    }
+  },
+  methods: {
+    resetFolderValue() {
+      this.folderValue = ''
+      this.showRadioButtons = false
     }
   }
 }

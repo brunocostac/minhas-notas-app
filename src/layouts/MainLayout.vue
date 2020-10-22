@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import {db} from 'boot/database.js'
 export default {
   name: 'MainLayout',
   components: {

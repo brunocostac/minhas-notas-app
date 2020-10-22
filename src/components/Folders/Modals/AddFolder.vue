@@ -9,12 +9,13 @@
         </q-card-section>
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancelar" v-close-popup />
-          <q-btn @click.stop="addFolder()" disable flat label="Salvar" v-close-popup />
+          <q-btn @click.stop="addFolder()" flat label="Salvar" v-close-popup />
         </q-card-actions>
     </q-card>
 </template>
 
 <script>
+import { db } from 'boot/database.js'
 export default {
     data() {
         return {
@@ -22,8 +23,13 @@ export default {
         }
     },
     methods: {
-        addFolder() {
-
+       addFolder() {
+          let newFolder = {
+              id: Date.now(),
+              name: this.folderName
+            }
+          db.collection('folders').add(newFolder)
+          this.$emit('update', newFolder)
         }
     }
 }

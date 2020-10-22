@@ -29,32 +29,11 @@
       <h5 class="text-h5 text-weight-bold on-right">Pastas</h5>
       <q-scroll-area class="fit">
           <q-list bordered separator>
-            <q-item clickable v-ripple>
-              <q-item-section side>
-                <q-radio v-if="showRadioButtons" v-model="folderValue" color="amber" val="1"/>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Estudos</q-item-label>
-              </q-item-section>
-            </q-item>
-
-            <q-item clickable v-ripple>
-              <q-item-section side>
-                <q-radio v-if="showRadioButtons" v-model="folderValue" color="amber" val="2"/>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Churrasco</q-item-label>              
-              </q-item-section>
-            </q-item>
-
-            <q-item clickable v-ripple>
-              <q-item-section side>
-                <q-radio v-if="showRadioButtons" v-model="folderValue" color="amber" val="3"/>
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Dentista</q-item-label>
-              </q-item-section>
-            </q-item>
+              <folder
+                v-for="(folder, key) in folders"
+                :key="key"
+                :folder="folder"
+                :id="key"></folder>
           </q-list>
       </q-scroll-area>
       <div class="q-pa-sm fixed-bottom-right on-left">
@@ -67,7 +46,7 @@
     </q-page-container>
 
     <q-dialog v-model="showAddFolder" persistent>
-        <add-folder-modal></add-folder-modal>
+        <add-folder-modal @update="updateFolders"></add-folder-modal>
     </q-dialog>
    
     <q-dialog v-model="showEditFolder" persistent>
@@ -78,19 +57,21 @@
 </template>
 
 <script>
-import {db} from 'boot/database.js'
+import { db } from 'boot/database.js'
 export default {
   name: 'MainLayout',
   components: {
     'add-folder-modal' : require('components/Folders/Modals/AddFolder.vue').default,
-    'edit-folder-modal': require('components/Folders/Modals/EditFolder.vue').default
+    'edit-folder-modal': require('components/Folders/Modals/EditFolder.vue').default,
+    'folder': require('components/Folders/Folder.vue').default
   },
   data () {
     return {
       leftDrawerOpen: false,
       showRadioButtons: false,
       showAddFolder: false,
-      folderValue: ''
+      folderValue: '',
+      folders: []
     }
   },
   computed: {
@@ -99,10 +80,22 @@ export default {
     }
   },
   methods: {
+   getFolders() {
+     console.log('oi')
+      db.collection('folders').get().then(folders => {
+        this.folders = folders
+      })
+    },
     resetFolderValue() {
       this.folderValue = ''
       this.showRadioButtons = false
+    },
+    updateFolders(newFolder) {
+      this.folders.push(newFolder)
     }
+  },
+  created() {
+    this.getFolders()
   }
 }
 </script>

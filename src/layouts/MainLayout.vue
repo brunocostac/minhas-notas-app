@@ -24,22 +24,33 @@
       content-class="bg-grey-1"
     >
       <div class="q-pa-sm fixed-top-right on-left">
-          <q-btn dense unelevated size="12px" color="white" text-color="amber" label="Editar" />
+          <q-btn @click="showRadioButton = !showRadioButton" dense unelevated size="12px" color="white" text-color="amber" label="Editar" />
       </div>
       <h5 class="text-h5 text-weight-bold on-right">Pastas</h5>
       <q-scroll-area class="fit">
           <q-list bordered separator>
             <q-item clickable v-ripple>
-              <q-item-section>Estudos</q-item-section>
+              <q-item-side>
+                <q-radio v-if="showRadioButton" v-model="radioButtonState" color="amber" val="1"/>
+              </q-item-side>
+              <q-item-section>
+                <q-item-label>Estudos</q-item-label>
+              </q-item-section>
             </q-item>
 
             <q-item clickable v-ripple>
+              <q-item-side>
+                <q-radio v-if="showRadioButton" v-model="radioButtonState" color="amber" val="2"/>
+              </q-item-side>
               <q-item-section>
                 <q-item-label>Churrasco</q-item-label>              
               </q-item-section>
             </q-item>
 
             <q-item clickable v-ripple>
+              <q-item-side>
+                <q-radio v-if="showRadioButton" v-model="radioButtonState" color="amber" val="3"/>
+              </q-item-side>
               <q-item-section>
                 <q-item-label>Dentista</q-item-label>
               </q-item-section>
@@ -63,7 +74,9 @@ export default {
   name: 'MainLayout',
   data () {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
+      showRadioButton: false,
+      radioButtonState: false
     }
   }
 }

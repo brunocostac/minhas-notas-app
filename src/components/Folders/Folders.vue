@@ -21,7 +21,7 @@
           />
         </q-item-section>
         <q-item-section>
-          <q-item-label>{{ folder.name }} {{ folder.id }}</q-item-label>
+          <q-item-label>{{ folder.name }}</q-item-label>
         </q-item-section>
       </q-item>
     </q-list>

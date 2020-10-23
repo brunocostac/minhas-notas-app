@@ -33,6 +33,7 @@
                 v-for="(folder, key) in folders"
                 :key="key"
                 :folder="folder"
+                :showRadioButtons="showRadioButtons"
                 :id="key"></folder>
           </q-list>
       </q-scroll-area>
@@ -46,7 +47,7 @@
     </q-page-container>
 
     <q-dialog v-model="showAddFolder" persistent>
-        <add-folder-modal @update="updateFolders"></add-folder-modal>
+        <add-folder-modal @add="addFolder"></add-folder-modal>
     </q-dialog>
    
     <q-dialog v-model="showEditFolder" persistent>
@@ -81,7 +82,6 @@ export default {
   },
   methods: {
    getFolders() {
-     console.log('oi')
       db.collection('folders').get().then(folders => {
         this.folders = folders
       })
@@ -90,7 +90,7 @@ export default {
       this.folderValue = ''
       this.showRadioButtons = false
     },
-    updateFolders(newFolder) {
+    addFolder(newFolder) {
       this.folders.push(newFolder)
     }
   },

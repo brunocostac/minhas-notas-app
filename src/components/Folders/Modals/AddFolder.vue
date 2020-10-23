@@ -29,7 +29,7 @@ export default {
               name: this.folderName
             }
           db.collection('folders').add(newFolder)
-          this.$emit('update', newFolder)
+          this.$emit('add', newFolder)
         }
     }
 }

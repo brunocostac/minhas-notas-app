@@ -33,3 +33,6 @@ yarn-error.log*
 *.sln
 .vscode/settings.json
 .vscode/extensions.json
+package-lock.json
+package-lock.json
+package-lock.json

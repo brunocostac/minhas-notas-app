@@ -1,16 +1,29 @@
 <template>
-    <q-item clickable v-ripple>
-        <q-item-section side>
-            <q-radio v-if="showRadioButtons" v-model="folderValue" color="amber" val="1"/>
-        </q-item-section>
-        <q-item-section>
-            <q-item-label>{{ folder.name }}</q-item-label>
-        </q-item-section>
-    </q-item>
+  <q-item tag="label" v-ripple>
+    <q-item-section avatar>
+      <q-radio @input="handleInput" v-model="folderValue" :val="folder.id"/>
+    </q-item-section>
+    <q-item-section>
+      <q-item-label>{{ folder.name }} {{ folder.id}}</q-item-label>
+    </q-item-section>
+  </q-item>
 </template>
 
 <script>
+import { db } from "boot/database.js";
+import { mapGetters } from "vuex";
 export default {
-    props: ['folder', 'showRadioButtons']
-}
+  props: ["folder","showRadioButtons"],
+  data() {
+    return {
+      folderValue: null,
+      showEditFolderModal: false,
+    };
+  },
+  methods: {
+    handleInput(e) {
+     this.folderValue = e
+    }
+  }
+};
 </script>

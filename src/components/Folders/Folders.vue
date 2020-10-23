@@ -13,12 +13,17 @@
     </div>
     <h5 class="text-h5 text-weight-bold on-right">Pastas</h5>
     <q-list bordered separator>
-      <folder
-        v-for="(folder, key) in folders"
-        :key="key"
-        :folder="folder"
-        :showRadioButtons="showRadioButtons"
-      ></folder>
+      <q-item v-for="folder in folders" :key="folder.id" tag="label" v-ripple>
+        <q-item-section avatar>
+          <q-radio
+            v-model="folderValue"
+            :val="folder.id"
+          />
+        </q-item-section>
+        <q-item-section>
+          <q-item-label>{{ folder.name }} {{ folder.id }}</q-item-label>
+        </q-item-section>
+      </q-item>
     </q-list>
     <div class="q-pa-sm fixed-bottom-right on-left">
       <q-btn
@@ -45,7 +50,6 @@ import { db } from "boot/database";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
-    folder: require("components/Folders/Folder.vue").default,
     "add-folder-modal": require("components/Folders/Modals/AddFolder.vue")
       .default,
     "edit-folder-modal": require("components/Folders/Modals/EditFolder.vue")
@@ -59,6 +63,7 @@ export default {
       showRadioButtons: false,
       showAddFolderModal: false,
       showEditFolderModal: false,
+      folderValue: null
     };
   },
   methods: {

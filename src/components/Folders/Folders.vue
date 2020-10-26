@@ -56,18 +56,18 @@ export default {
     "edit-folder-modal": require("components/Folders/Modals/EditFolder.vue")
       .default,
   },
-  computed: {
-    showEditFolderModal() {
-      return this.folderValue ? true : false;
-    },
-    ...mapGetters("folders", ["folders"]),
-  },
   data() {
     return {
       showRadioButtons: false,
       showAddFolderModal: false,
       folderValue: null,
     };
+  },
+  computed: {
+    showEditFolderModal() {
+      return this.folderValue ? true : false;
+    },
+    ...mapGetters("folders", ["folders"]),
   },
   methods: {
     ...mapActions("folders", ["idbReadFolders"]),

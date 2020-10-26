@@ -13,7 +13,16 @@
     </div>
     <h5 class="text-h5 text-weight-bold on-right">Pastas</h5>
     <q-list bordered separator>
-      <q-item v-for="folder in folders" :key="folder.id" tag="label" v-ripple>
+      <q-item
+        v-for="folder in folders"
+        :key="folder.id"
+        :active="folder.id ? folder.id == selectedFolder.id : false"
+        @click="selectFolder(folder.id)"
+        tag="label"
+        v-ripple
+        exact
+        clickable
+      >
         <q-item-section avatar>
           <q-radio
             v-if="showRadioButtons"
@@ -41,7 +50,10 @@
       <add-folder-modal></add-folder-modal>
     </q-dialog>
     <q-dialog v-model="showEditFolderModal" persistent>
-      <edit-folder-modal @reset="resetFolderValue" :id="folderValue"></edit-folder-modal>
+      <edit-folder-modal
+        @reset="resetFolderValue"
+        :id="folderValue"
+      ></edit-folder-modal>
     </q-dialog>
   </div>
 </template>
@@ -67,13 +79,13 @@ export default {
     showEditFolderModal() {
       return this.folderValue ? true : false;
     },
-    ...mapGetters("folders", ["folders"]),
+    ...mapGetters("folders", ["folders", "selectedFolder"]),
   },
   methods: {
-    ...mapActions("folders", ["idbReadFolders"]),
+    ...mapActions("folders", ["idbReadFolders", "selectFolder"]),
     resetFolderValue() {
-      this.folderValue = null
-    }
+      this.folderValue = null;
+    },
   },
   mounted() {
     this.idbReadFolders();

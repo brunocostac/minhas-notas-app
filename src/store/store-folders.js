@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import { uid } from 'quasar'
 import { db } from 'boot/database'
 
 const state = {
@@ -61,7 +60,6 @@ const getters = {
     folders() {
         let folders = {}
         Object.keys(state.folders).forEach(function (key) {
-            //console.log(key)
             let folder = state.folders[key]
             folders[key] = folder
         })
@@ -75,7 +73,7 @@ const getters = {
             }
         })
         return folder
-    }
+    } 
 }
 
 export default {

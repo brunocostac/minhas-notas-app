@@ -41,7 +41,7 @@
       <add-folder-modal></add-folder-modal>
     </q-dialog>
     <q-dialog v-model="showEditFolderModal" persistent>
-      <edit-folder-modal></edit-folder-modal>
+      <edit-folder-modal @reset="resetFolderValue" :id="folderValue"></edit-folder-modal>
     </q-dialog>
   </div>
 </template>
@@ -57,18 +57,24 @@ export default {
       .default,
   },
   computed: {
+    showEditFolderModal() {
+      return this.folderValue ? true : false;
+    },
     ...mapGetters("folders", ["folders"]),
   },
   data() {
     return {
       showRadioButtons: false,
       showAddFolderModal: false,
-      showEditFolderModal: false,
-      folderValue: null
+      folderValue: null,
     };
   },
   methods: {
     ...mapActions("folders", ["idbReadFolders"]),
+    resetFolderValue() {
+      this.folderValue = null
+      this.showRadioButtons = false
+    }
   },
   mounted() {
     this.idbReadFolders();

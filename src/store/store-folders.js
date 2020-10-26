@@ -1,10 +1,11 @@
 import Vue from 'vue'
-import { uid} from 'quasar'
+import { uid } from 'quasar'
 import { db } from 'boot/database'
 
 const state = {
     folders: {
-    }
+    },
+    selectedFolder: ''
 }
 
 const mutations = {
@@ -14,7 +15,10 @@ const mutations = {
         }
     },
     clearFolders(state) {
-       state.folders = {}
+        state.folders = {}
+    },
+    selectFolder(state, payload) {
+        state.selectedFolder = payload
     }
 }
 
@@ -26,8 +30,16 @@ const actions = {
         }
         dispatch('idbAddFolder', payload)
     },
+    updateFolder({ dispatch }, payload) {
+        dispatch('idbUpdateFolder', payload)
+    },
     idbAddFolder({ dispatch }, payload) {
         db.collection('folders').add(payload).then(response => {
+            dispatch('idbReadFolders')
+        })
+    },
+    idbUpdateFolder({ dispatch }, payload) {
+        db.collection('folders').doc({ id: payload.id }).update({ name: payload.name }).then(response => {
             dispatch('idbReadFolders')
         })
     },
@@ -36,21 +48,33 @@ const actions = {
             dispatch('vuexUpdateFolders', payload)
         });
     },
-    vuexUpdateFolders({commit}, payload) {
+    vuexUpdateFolders({ commit }, payload) {
         commit('clearFolders')
         commit('addFolders', payload)
+    },
+    selectFolder({ commit }, payload) {
+        commit('selectFolder', payload)
     }
 }
 
 const getters = {
     folders() {
         let folders = {}
-		Object.keys(state.folders).forEach(function(key) {
-			//console.log(key)
+        Object.keys(state.folders).forEach(function (key) {
+            //console.log(key)
             let folder = state.folders[key]
-			folders[key] = folder
-		})
-		return folders
+            folders[key] = folder
+        })
+        return folders
+    },
+    selectedFolder() {
+        let folder = {}
+        Object.keys(state.folders).forEach(function (key) {
+            if (key == state.selectedFolder) {
+                folder = state.folders[key]
+            }
+        })
+        return folder
     }
 }
 

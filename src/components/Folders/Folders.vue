@@ -73,7 +73,6 @@ export default {
     ...mapActions("folders", ["idbReadFolders"]),
     resetFolderValue() {
       this.folderValue = null
-      this.showRadioButtons = false
     }
   },
   mounted() {

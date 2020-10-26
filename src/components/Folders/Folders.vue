@@ -16,6 +16,7 @@
       <q-item v-for="folder in folders" :key="folder.id" tag="label" v-ripple>
         <q-item-section avatar>
           <q-radio
+            v-if="showRadioButtons"
             v-model="folderValue"
             :val="folder.id"
           />

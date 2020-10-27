@@ -5,7 +5,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/PageNotes.vue') },
-      { path: '/note', component: () => import('pages/PageNote.vue') }
+      { path: '/addnote', component: () => import('pages/PageAddNote.vue') }
     ]
   },
 

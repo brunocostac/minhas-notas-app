@@ -16,7 +16,7 @@
       <q-item
         v-for="folder in folders"
         :key="folder.id"
-        :active="folder.id ? folder.id == selectedFolder.id : false"
+        :to="'/notes/' + folder.id"
         @click="vuexSelectFolder(folder.id)"
         tag="label"
         v-ripple

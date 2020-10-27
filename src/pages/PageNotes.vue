@@ -20,7 +20,7 @@
         </div>
         <h5 class="text-h5 text-weight-bold on-right">Estudos</h5>
         <q-list bordered separator>
-          <q-slide-item @right="onRight" right-color="red">
+          <q-slide-item @right="" right-color="red">
             <template v-slot:right>
               <q-icon name="delete" />
             </template>
@@ -41,30 +41,6 @@
               </q-item-section>
               <q-item-section side top>
                 <q-item-label caption>10/10/2020 às 08:32:39</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-slide-item>
-          <q-slide-item @right="onRight" right-color="red">
-            <template v-slot:right>
-              <q-icon name="delete" />
-            </template>
-            <q-item>
-              <q-item-section side>
-                <q-radio
-                  v-if="showRadioButton"
-                  v-model="radioButtonState"
-                  color="amber"
-                  val="2"
-                />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Estudar Vue.js</q-item-label>
-                <q-item-label caption lines="2"
-                  >Preciso estudar sobre slots</q-item-label
-                >
-              </q-item-section>
-              <q-item-section side top>
-                <q-item-label caption>12/10/2020 às 04:32:39</q-item-label>
               </q-item-section>
             </q-item>
           </q-slide-item>
@@ -103,19 +79,8 @@ export default {
       radioButtonState: false,
     };
   },
-  methods: {
-    onRight({ reset }) {
-      //this.$q.notify('Right action triggered. Resetting in 1 second.')
-      this.finalize(reset);
-    },
-    finalize(reset) {
-      this.timer = setTimeout(() => {
-        reset();
-      }, 1000);
-    },
-  },
-  beforeDestroy() {
-    clearTimeout(this.timer);
-  },
+  created() {
+    console.log(this.$route.params.noteid)
+  }
 };
 </script>

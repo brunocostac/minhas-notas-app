@@ -57,7 +57,7 @@
             label="3 notas"
           />
           <q-btn
-            :to="'/addnote/' + folderId"
+            :to="'/addnote/'+folderId"
             class="float-right on-left"
             dense
             unelevated
@@ -90,6 +90,9 @@ export default {
   },
   updated() {
     this.folderId = this.$route.params.id
+    this.vuexSelectFolder(this.folderId)
+  },
+  mounted() {
     this.vuexSelectFolder(this.folderId)
   }
 };

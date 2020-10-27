@@ -22,17 +22,11 @@ const mutations = {
 }
 
 const actions = {
-    addFolder({ dispatch }, folder) {
+    idbAddFolder({ dispatch }, folder) {
         let payload = {
             id: Date.now(),
             name: folder
         }
-        dispatch('idbAddFolder', payload)
-    },
-    updateFolder({ dispatch }, payload) {
-        dispatch('idbUpdateFolder', payload)
-    },
-    idbAddFolder({ dispatch }, payload) {
         db.collection('folders').add(payload).then(response => {
             dispatch('idbReadFolders')
         })
@@ -47,13 +41,21 @@ const actions = {
             dispatch('vuexUpdateFolders', payload)
         });
     },
+    idbSelectFirstFolder({ commit }) {
+        db.collection('folders').orderBy('id', 'asc').limit(1).get().then(payload => {
+            commit('selectFolder', payload[0].id)
+        })
+    },
     vuexUpdateFolders({ commit }, payload) {
         commit('clearFolders')
         commit('addFolders', payload)
-    },
-    selectFolder({ commit }, payload) {
+    }, 
+    vuexSelectFolder({ commit }, payload) {
         commit('selectFolder', payload)
-    }
+    },
+    vuexSelectFirstFolder({dispatch}) {
+        dispatch('idbSelectFirstFolder')
+    },
 }
 
 const getters = {

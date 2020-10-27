@@ -17,7 +17,7 @@
         v-for="folder in folders"
         :key="folder.id"
         :active="folder.id ? folder.id == selectedFolder.id : false"
-        @click="selectFolder(folder.id)"
+        @click="vuexSelectFolder(folder.id)"
         tag="label"
         v-ripple
         exact
@@ -82,13 +82,14 @@ export default {
     ...mapGetters("folders", ["folders", "selectedFolder"]),
   },
   methods: {
-    ...mapActions("folders", ["idbReadFolders", "selectFolder"]),
+    ...mapActions("folders", ["idbReadFolders", "vuexSelectFolder", 'vuexSelectFirstFolder']),
     resetFolderValue() {
       this.folderValue = null;
     },
   },
   mounted() {
     this.idbReadFolders();
+    this.vuexSelectFirstFolder()
   },
 };
 </script>

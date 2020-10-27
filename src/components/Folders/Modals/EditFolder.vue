@@ -27,7 +27,7 @@ export default {
       ...mapGetters("folders", ["selectedFolder"]),
     },
     methods: {
-      ...mapActions('folders',['selectFolder', 'updateFolder']),
+      ...mapActions('folders',['vuexSelectFolder', 'idbUpdateFolder']),
       cancelButtonFired() {
         this.$emit('reset')
       },
@@ -36,12 +36,12 @@ export default {
           'id': this.id,
           'name': this.name
         }
-        this.updateFolder(folder)
+        this.idbUpdateFolder(folder)
         this.$emit('reset')
       }
     },
     mounted() {
-      this.selectFolder(this.id)
+      this.vuexSelectFolder(this.id)
       this.name = this.selectedFolder.name
     }
 }

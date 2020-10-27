@@ -24,9 +24,9 @@ export default {
         }
     },
     methods: {
-      ...mapActions('folders', ['addFolder']),
+      ...mapActions('folders', ['idbAddFolder']),
        submitFolder() {
-          this.addFolder(this.folder)
+          this.idbAddFolder(this.folder)
         }
     }
 }

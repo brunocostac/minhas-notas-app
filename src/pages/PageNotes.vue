@@ -18,9 +18,10 @@
             label="Editar"
           />
         </div>
-        <h5 class="text-h5 text-weight-bold on-right">Estudos</h5>
+        <span class="hidden">{{ this.$route.params.noteid }}</span>
+        <h5 class="text-h5 text-weight-bold on-right">{{ this.selectedFolder.name}}</h5>
         <q-list bordered separator>
-          <q-slide-item @right="" right-color="red">
+          <q-slide-item right-color="red">
             <template v-slot:right>
               <q-icon name="delete" />
             </template>
@@ -72,6 +73,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -79,8 +81,14 @@ export default {
       radioButtonState: false,
     };
   },
-  created() {
-    console.log(this.$route.params.noteid)
+  computed: {
+    ...mapGetters("folders", ["selectedFolder"])
+  },
+  methods: {
+    ...mapActions("folders",["vuexSelectFolder"])
+  },
+  updated() {
+    this.vuexSelectFolder(this.$route.params.noteid)
   }
 };
 </script>

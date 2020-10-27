@@ -4,7 +4,7 @@ import { db } from 'boot/database'
 const state = {
     folders: {
     },
-    selectedFolder: ''
+    selectedFolderId: ''
 }
 
 const mutations = {
@@ -17,7 +17,7 @@ const mutations = {
         state.folders = {}
     },
     selectFolder(state, payload) {
-        state.selectedFolder = payload
+        state.selectedFolderId = payload
     }
 }
 
@@ -70,7 +70,7 @@ const getters = {
     selectedFolder() {
         let folder = {}
         Object.keys(state.folders).forEach(function (key) {
-            if (key == state.selectedFolder) {
+            if (key == state.selectedFolderId) {
                 folder = state.folders[key]
             }
         })

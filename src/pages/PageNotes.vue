@@ -18,7 +18,7 @@
             label="Editar"
           />
         </div>
-        <span class="hidden">{{ this.$route.params.noteid }}</span>
+        <span class="hidden">{{ this.$route.params.id }}</span>
         <h5 class="text-h5 text-weight-bold on-right">{{ this.selectedFolder.name}}</h5>
         <q-list bordered separator>
           <q-slide-item right-color="red">
@@ -57,7 +57,7 @@
             label="3 notas"
           />
           <q-btn
-            to="/addnote"
+            :to="'/addnote/' + folderId"
             class="float-right on-left"
             dense
             unelevated
@@ -79,6 +79,7 @@ export default {
     return {
       showRadioButton: false,
       radioButtonState: false,
+      folderId: null
     };
   },
   computed: {
@@ -88,7 +89,8 @@ export default {
     ...mapActions("folders",["vuexSelectFolder"])
   },
   updated() {
-    this.vuexSelectFolder(this.$route.params.noteid)
+    this.folderId = this.$route.params.id
+    this.vuexSelectFolder(this.folderId)
   }
 };
 </script>

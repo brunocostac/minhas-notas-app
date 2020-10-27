@@ -4,8 +4,8 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '/notes/:noteid', component: () => import('pages/PageNotes.vue') },
-      { path: '/addnote', component: () => import('pages/PageAddNote.vue')}
+      { path: '/notes/:id', component: () => import('pages/PageNotes.vue') },
+      { path: '/addnote/:id', component: () => import('pages/PageAddNote.vue')}
     ]
   },
 

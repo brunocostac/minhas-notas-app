@@ -12,6 +12,7 @@
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
     "localbase": "^0.7.4",
+    "moment": "^2.29.1",
     "quasar": "^1.0.0",
     "vuex": "^3.5.1"
   },

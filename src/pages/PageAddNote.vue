@@ -29,6 +29,8 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import moment from 'moment'
+moment.locale('pt-br');
 
 export default {
   data() {
@@ -42,6 +44,7 @@ export default {
   },
   methods: {
     ...mapActions("folders", ["vuexSelectFolder"]),
+    ...mapActions('notes', ["idbAddNote"]),
     submitNote() {
       let lines = this.noteText.split('\n'),
           title = lines[0],
@@ -52,11 +55,10 @@ export default {
         noteBody: body,
         folderId: this.folderId,
         id: Date.now(),
-        date: '',
-        hour: ''
+        date: moment().format('L'),
+        hour: moment().format('LTS')
       };
-      console.log('noteobj', note)
-      //console.log('lines', lines)
+      this.idbAddNote(note)
     },
   },
   created() {

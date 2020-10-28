@@ -13,10 +13,10 @@
         <q-footer bordered>
           <q-btn
             @click="submitNote"
-            to="/note"
+            :to="'/notes/'+this.selectedFolder.id"
             class="absolute-bottom"
             unelevated
-            size="12px"
+            size="12px" 
             color="white"
             text-color="amber"
             label="Salvar"

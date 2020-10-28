@@ -1,44 +1,68 @@
 <template>
   <q-page>
-      <transition
-        appear
-        enter-active-class="animated fadeIn"
-        leave-active-class="animated fadeOut"
-      >
-        <div class="q-pb-xs q-pt-xs">
-            <h5 class="text-h5 text-weight-bold on-right">{{ this.selectedFolder.name}}</h5>
-            <q-editor v-model="editor"/>
-            <q-footer bordered>
-                <q-btn @click="submitNote" to="/note" class="absolute-bottom" unelevated size="12px" color="white" text-color="amber" label="Salvar"/>
-            </q-footer>
-        </div>
+    <transition
+      appear
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <div class="q-pa-md q-gutter-sm">
+        <h5 class="text-h5 text-weight-bold on-right">
+          {{ this.selectedFolder.name }}
+        </h5>
+        <q-input v-model="noteText" square outlined type="textarea" />
+        <q-footer bordered>
+          <q-btn
+            @click="submitNote"
+            to="/note"
+            class="absolute-bottom"
+            unelevated
+            size="12px"
+            color="white"
+            text-color="amber"
+            label="Salvar"
+          />
+        </q-footer>
+      </div>
     </transition>
   </q-page>
 </template>
 
 <script>
-import { mapActions, mapGetters} from 'vuex'
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  data () {
+  data() {
     return {
-      editor: '',
-      folderId: ''
-    }
+      noteText: "",
+      folderId: "",
+    };
   },
   computed: {
-    ...mapGetters("folders", ["selectedFolder"])
+    ...mapGetters("folders", ["selectedFolder"]),
   },
   methods: {
-    ...mapActions("folders",["vuexSelectFolder"]),
+    ...mapActions("folders", ["vuexSelectFolder"]),
     submitNote() {
-      
-    }
+      let lines = this.noteText.split('\n'),
+          title = lines[0],
+          body = this.noteText.replace(title, '')
+
+      let note = {
+        noteTitle: title,
+        noteBody: body,
+        folderId: this.folderId,
+        id: Date.now(),
+        date: '',
+        hour: ''
+      };
+      console.log('noteobj', note)
+      //console.log('lines', lines)
+    },
   },
   created() {
-    this.folderId = this.$route.params.id
-    this.vuexSelectFolder(this.folderId)
-  }
-}
+    this.folderId = this.$route.params.id;
+    this.vuexSelectFolder(this.folderId);
+  },
+};
 </script>
 

@@ -15,12 +15,12 @@
         </q-item-section>
         <q-item-section>
           <q-item-label>{{ note.noteTitle }}</q-item-label>
-          <q-item-label caption lines="2">
-            {{ note.noteBody }} </q-item-label
-          >
+          <q-item-label caption lines="2"> {{ note.noteBody }} </q-item-label>
         </q-item-section>
         <q-item-section side top>
-          <q-item-label caption>{{ note.date}} às {{ note.hour }}</q-item-label>
+          <q-item-label caption
+            >{{ note.date }} às {{ note.hour }}</q-item-label
+          >
         </q-item-section>
       </q-item>
     </q-slide-item>
@@ -33,7 +33,6 @@ export default {
   computed: {
     ...mapGetters("notes", ["folderNotes"]),
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>

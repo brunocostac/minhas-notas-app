@@ -32,7 +32,7 @@
             label="3 notas"
           />
           <q-btn
-            :to="'/addnote/'+folderId"
+            :to="'/addnote/'+this.selectedFolder.id"
             class="float-right on-left"
             dense
             unelevated

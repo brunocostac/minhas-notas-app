@@ -17,6 +17,7 @@
         v-for="folder in folders"
         :key="folder.id"
         :to="'/notes/' + folder.id"
+        @click="vuexSelectFolder(folder.id)"
         tag="label"
         v-ripple
         exact
@@ -82,14 +83,14 @@ export default {
     ...mapGetters("folders", ["folders", "selectedFolder"]),
   },
   methods: {
-    ...mapActions("folders", ["idbReadFolders", 'vuexSelectFirstFolder']),
+    ...mapActions("folders", ["idbReadFolders", 'vuexSelectFolder']),
     resetFolderValue() {
       this.folderValue = null;
     },
   },
   created() {
     this.idbReadFolders();
-    this.vuexSelectFirstFolder()
+    //this.vuexSelectFirstFolder()
     //this.$router.push({ path: `/notes/${selectedFolder}`})
   }
 };

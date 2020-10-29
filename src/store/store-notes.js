@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import { db } from 'boot/database'
+import folders from './store-folders'
 
 const state = {
     notes: {
@@ -24,9 +25,9 @@ const actions = {
         })
     },
     idbReadNotes({ dispatch }) {
-        db.collection("notes").get().then((payload) => {
+        db.collection("notes").get().then(payload => {
             dispatch('vuexUpdateNotes', payload)
-        });
+        })
     },
     vuexUpdateNotes({ commit }, payload) {
         commit('clearNotes')
@@ -35,6 +36,15 @@ const actions = {
 }
 
 const getters = {
+    folderNotes() {
+        let notes = {}
+        Object.keys(state.notes).forEach(function (key) {
+            if (state.notes[key].folderId == folders.state.selectedFolderId) {
+                notes[key] = state.notes[key]
+            }
+        })
+        return notes
+    } 
 }
 
 export default {

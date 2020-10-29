@@ -82,18 +82,19 @@ export default {
       folderId: null
     };
   },
+  components: {
+    notes: require("components/Notes/NoteS.vue").default
+  },
   computed: {
-    ...mapGetters("folders", ["selectedFolder"])
+    ...mapGetters("folders", ["selectedFolder"]),
+    ...mapGetters("notes", ["folderNotes"]),
   },
   methods: {
-    ...mapActions("folders",["vuexSelectFolder"])
-  },
-  updated() {
-    this.folderId = this.$route.params.id
-    this.vuexSelectFolder(this.folderId)
+    ...mapActions("notes", ["idbReadNotes"])
   },
   mounted() {
-    this.vuexSelectFolder(this.folderId)
+    this.folderId = this.$route.params.id
+    this.idbReadNotes()
   }
 };
 </script>

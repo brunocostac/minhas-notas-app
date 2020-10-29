@@ -29,7 +29,7 @@
             size="12px"
             color="white"
             text-color="amber"
-            label="3 notas"
+            :label="Object.keys(folderNotes).length+' notas'"
           />
           <q-btn
             :to="'/addnote/'+this.selectedFolder.id"

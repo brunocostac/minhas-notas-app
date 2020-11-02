@@ -6,7 +6,7 @@
     </h5>
     <q-list bordered separator>
       <q-slide-item
-        @right="onRight"
+        @right="opt => onRight(opt, note.id)"
         right-color="red"
         v-for="note in folderNotes"
         :key="note.id"
@@ -15,14 +15,6 @@
           <q-icon name="delete" />
         </template>
         <q-item>
-          <q-item-section side>
-            <q-radio
-              v-if="showRadioButton"
-              v-model="radioButtonState"
-              :val="note.id"
-              color="amber"
-            />
-          </q-item-section>
           <q-item-section>
             <q-item-label>{{ note.noteTitle }}</q-item-label>
             <q-item-label caption lines="2"> {{ note.noteBody }} </q-item-label>
@@ -39,7 +31,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return { 
@@ -52,7 +44,8 @@ export default {
     ...mapGetters("folders", ["selectedFolder"]),
   },
   methods: {
-   onRight ({ reset }) {
+    ...mapActions("notes", ["idbDeleteNote"]),
+   onRight ({reset}, id) {
       this.$q.dialog({
         title: 'Confirmação',
         message: 'Gostaria de deletar esta nota?',
@@ -60,25 +53,22 @@ export default {
         cancel: true,
         persistent: true
       }).onOk(() => {
+        this.idbDeleteNote(id)
         // console.log('>>>> OK')
       }).onOk(() => {
         // console.log('>>>> second OK catcher')
       }).onCancel(() => {
-        // console.log('>>>> Cancel')
-      }).onDismiss(() => {
         this.finalize(reset)
-        // console.log('I am triggered on both OK and Cancel')
       })
     },
     finalize (reset) {
       this.timer = setTimeout(() => {
         reset()
-      }, 1000)
+      }, 500)
     }
   },
   beforeDestroy () {
     clearTimeout(this.timer)
-  },
-  mounted() {},
+  }
 };
 </script>

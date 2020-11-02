@@ -24,6 +24,14 @@ const actions = {
             dispatch('idbReadNotes')
         })
     },
+    idbDeleteNote({ dispatch }, payload) {
+        db.collection('notes').doc({ id: payload }).delete().then(response => {
+            console.log('Delete successful, now do something.')
+            dispatch('idbReadNotes')
+        }).catch(error => {
+            console.log('There was an error, do something else.')
+        })
+    },
     idbReadNotes({ dispatch }) {
         db.collection("notes").get().then(payload => {
             dispatch('vuexUpdateNotes', payload)
@@ -32,7 +40,7 @@ const actions = {
     vuexUpdateNotes({ commit }, payload) {
         commit('clearNotes')
         commit('addNotes', payload)
-    }, 
+    },
 }
 
 const getters = {
@@ -44,7 +52,7 @@ const getters = {
             }
         })
         return notes
-    } 
+    }
 }
 
 export default {

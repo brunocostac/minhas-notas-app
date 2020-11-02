@@ -46,6 +46,24 @@
         label="Nova pasta"
       />
     </div>
+    <q-dialog v-model="showOptionsEditOrDelete" persistent>
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Alert</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
+          repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis
+          perferendis totam, ea at omnis vel numquam exercitationem aut, natus
+          minima, porro labore.
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <q-dialog v-model="showAddFolderModal" persistent>
       <add-folder-modal></add-folder-modal>
     </q-dialog>
@@ -61,7 +79,7 @@
 <script>
 import { db } from "boot/database";
 import { mapActions, mapGetters } from "vuex";
-import { routes } from "../../router/routes"
+import { routes } from "../../router/routes";
 export default {
   components: {
     "add-folder-modal": require("components/Folders/Modals/AddFolder.vue")
@@ -77,13 +95,13 @@ export default {
     };
   },
   computed: {
-    showEditFolderModal() {
+    showOptionsEditOrDelete() {
       return this.folderValue ? true : false;
     },
     ...mapGetters("folders", ["folders", "selectedFolder"]),
   },
   methods: {
-    ...mapActions("folders", ["idbReadFolders", 'vuexSelectFolder']),
+    ...mapActions("folders", ["idbReadFolders", "vuexSelectFolder"]),
     resetFolderValue() {
       this.folderValue = null;
     },
@@ -92,6 +110,6 @@ export default {
     this.idbReadFolders();
     //this.vuexSelectFirstFolder()
     //this.$router.push({ path: `/notes/${selectedFolder}`})
-  }
+  },
 };
 </script>

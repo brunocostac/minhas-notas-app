@@ -6,20 +6,6 @@
       leave-active-class="animated fadeOut"
     >
       <div>
-        <div class="q-pb-xs q-pt-xs">
-          <q-btn
-            @click="showRadioButton = !showRadioButton"
-            class="float-right on-left"
-            dense
-            unelevated
-            size="12px"
-            color="white"
-            text-color="amber"
-            label="Editar"
-          />
-        </div>
-        <span class="hidden">{{ this.$route.params.id }}</span>
-        <h5 class="text-h5 text-weight-bold on-right">{{ this.selectedFolder.name}}</h5>
         <notes></notes>
         <q-footer align="justify" bordered class="bg-white text-primary">
           <q-btn

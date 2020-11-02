@@ -8,7 +8,7 @@
         size="12px"
         color="white"
         text-color="amber"
-        label="Editar"
+        :label="this.labelEditOrOk"
       />
     </div>
     <h5 class="text-h5 text-weight-bold on-right">Pastas</h5>
@@ -46,24 +46,6 @@
         label="Nova pasta"
       />
     </div>
-    <q-dialog v-model="showOptionsEditOrDelete" persistent>
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Alert</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum
-          repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis
-          perferendis totam, ea at omnis vel numquam exercitationem aut, natus
-          minima, porro labore.
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
     <q-dialog v-model="showAddFolderModal" persistent>
       <add-folder-modal></add-folder-modal>
     </q-dialog>
@@ -95,8 +77,11 @@ export default {
     };
   },
   computed: {
-    showOptionsEditOrDelete() {
+    showEditFolderModal() {
       return this.folderValue ? true : false;
+    },
+    labelEditOrOk() {
+      return this.showRadioButtons ? 'Ok' : 'Editar';
     },
     ...mapGetters("folders", ["folders", "selectedFolder"]),
   },
@@ -108,8 +93,6 @@ export default {
   },
   created() {
     this.idbReadFolders();
-    //this.vuexSelectFirstFolder()
-    //this.$router.push({ path: `/notes/${selectedFolder}`})
   },
 };
 </script>

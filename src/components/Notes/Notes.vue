@@ -1,23 +1,12 @@
 <template>
   <div>
-    <div class="q-pb-xs q-pt-xs">
-      <q-btn
-        @click="showRadioButton = !showRadioButton"
-        class="float-right on-left"
-        dense
-        unelevated
-        size="12px"
-        color="white"
-        text-color="amber"
-        label="Editar"
-      />
-    </div>
     <span class="hidden">{{ this.$route.params.id }}</span>
     <h5 class="text-h5 text-weight-bold on-right">
       {{ this.selectedFolder.name }}
     </h5>
     <q-list bordered separator>
       <q-slide-item
+        @right="onRight"
         right-color="red"
         v-for="note in folderNotes"
         :key="note.id"
@@ -61,6 +50,34 @@ export default {
   computed: {
     ...mapGetters("notes", ["folderNotes"]),
     ...mapGetters("folders", ["selectedFolder"]),
+  },
+  methods: {
+   onRight ({ reset }) {
+      this.$q.dialog({
+        title: 'Confirmação',
+        message: 'Gostaria de deletar esta nota?',
+        stackButtons: true,
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        // console.log('>>>> OK')
+      }).onOk(() => {
+        // console.log('>>>> second OK catcher')
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      }).onDismiss(() => {
+        this.finalize(reset)
+        // console.log('I am triggered on both OK and Cancel')
+      })
+    },
+    finalize (reset) {
+      this.timer = setTimeout(() => {
+        reset()
+      }, 1000)
+    }
+  },
+  beforeDestroy () {
+    clearTimeout(this.timer)
   },
   mounted() {},
 };

@@ -13,13 +13,13 @@
         <q-footer bordered>
           <q-btn
             @click="submitNote"
-            :to="'/notes/' + this.selectedFolder.id"
+            :to="'/notes/'+this.selectedFolder.id"
             class="absolute-bottom"
             unelevated
             size="12px"
             color="white"
             text-color="amber"
-            label="Salvar"
+            label="Editar"
           />
         </q-footer>
       </div>
@@ -35,16 +35,16 @@ moment.locale("pt-br");
 export default {
   data() {
     return {
-      noteText: "",
-      folderId: "",
+      note: {},
+      noteText: null,
     };
   },
   computed: {
     ...mapGetters("folders", ["selectedFolder"]),
+    ...mapGetters("notes", ["selectedNote"]),
   },
   methods: {
-    ...mapActions("folders", ["vuexSelectFolder"]),
-    ...mapActions("notes", ["idbAddNote"]),
+    ...mapActions("notes", ["vuexSelectNote", "idbUpdateNote"]),
     submitNote() {
       let lines = this.noteText.split("\n"),
         title = lines[0],
@@ -53,18 +53,21 @@ export default {
       let note = {
         noteTitle: title,
         noteBody: body,
-        folderId: this.folderId,
-        id: Date.now(),
+        folderId: this.note.folderId,
+        id: this.note.id,
         date: moment().format("L"),
         hour: moment().format("LTS"),
       };
-      this.idbAddNote(note);
+      this.idbUpdateNote(note);
     },
   },
   created() {
-    this.folderId = this.$route.params.id;
-    this.vuexSelectFolder(this.folderId);
+    this.noteId = this.$route.params.id;
+    this.vuexSelectNote(this.noteId);
+  },
+  mounted() {
+    this.note = Object.assign({}, this.selectedNote);
+    this.noteText = this.note.noteTitle + this.note.noteBody;
   },
 };
 </script>
-

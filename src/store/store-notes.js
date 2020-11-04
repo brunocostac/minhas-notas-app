@@ -4,7 +4,8 @@ import folders from './store-folders'
 
 const state = {
     notes: {
-    }
+    },
+    selectedNoteId: ''
 }
 
 const mutations = {
@@ -15,12 +16,27 @@ const mutations = {
     },
     clearNotes(state) {
         state.notes = {}
-    },
+    },   
+    selectNote(state, payload) {
+        state.selectedNoteId = payload
+    }
 }
 
 const actions = {
     idbAddNote({ dispatch }, payload) {
         db.collection('notes').add(payload).then(response => {
+            dispatch('idbReadNotes')
+        })
+    },
+    idbUpdateNote({ dispatch }, payload) {
+        db.collection('notes').doc({ id: payload.id }).update({
+            noteTitle: payload.noteTitle,
+            noteBody: payload.noteBody,
+            folderId: payload.folderId,
+            id: payload.id,
+            date: payload.date,
+            hour: payload.hour
+        }).then(response => {
             dispatch('idbReadNotes')
         })
     },
@@ -41,6 +57,9 @@ const actions = {
         commit('clearNotes')
         commit('addNotes', payload)
     },
+     vuexSelectNote({ commit }, payload) {
+        commit('selectNote', payload)
+    },
 }
 
 const getters = {
@@ -52,6 +71,15 @@ const getters = {
             }
         })
         return notes
+    },
+    selectedNote() {
+       let note = {}
+       Object.keys(state.notes).forEach(function (key) {
+            if (state.notes[key].id == state.selectedNoteId) {
+                note = state.notes[key]
+            }
+        }) 
+        return note
     }
 }
 

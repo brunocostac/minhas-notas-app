@@ -44,7 +44,7 @@ export default {
     ...mapGetters("notes", ["selectedNote"]),
   },
   methods: {
-    ...mapActions("notes", ["vuexSelectNote", "idbUpdateNote"]),
+    ...mapActions("notes", ["vuexSelectNote", "idbSetNote"]),
     submitNote() {
       let lines = this.noteText.split("\n"),
         title = lines[0],
@@ -58,7 +58,7 @@ export default {
         date: moment().format("L"),
         hour: moment().format("LTS"),
       };
-      this.idbUpdateNote(note);
+      this.idbSetNote(note);
     },
   },
   created() {

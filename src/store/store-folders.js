@@ -36,6 +36,14 @@ const actions = {
             dispatch('idbReadFolders')
         })
     },
+     idbDeleteFolder({ dispatch }, payload) {
+        db.collection('folders').doc({ id: payload }).delete().then(response => {
+            console.log('Delete successful, now do something.')
+            dispatch('idbReadFolders')
+        }).catch(error => {
+            console.log('There was an error, do something else.')
+        })
+    },
     idbReadFolders({ dispatch }) {
         db.collection("folders").get().then((payload) => {
             dispatch('vuexUpdateFolders', payload)

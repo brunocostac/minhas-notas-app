@@ -98,21 +98,27 @@ export default {
     ...mapGetters("folders", ["folders", "selectedFolder"]),
   },
   methods: {
-    ...mapActions("folders", ["idbReadFolders", "vuexSelectFolder"]),
+    ...mapActions("folders", [
+      "idbDeleteFolder",
+      "idbReadFolders",
+      "vuexSelectFolder",
+    ]),
+    ...mapActions("notes", ["idbDeleteAllNotes"]),
     resetFolderValue() {
       this.folderValue = null;
     },
     onRight({ reset }, id) {
       this.$q
         .dialog({
-          title: "Confirmação",
-          message: "Gostaria de deletar esta pasta?",
+          title: "Apagar pasta e suas notas?",
+          message: "Todas as notas dentro desta pasta também serão removidas",
           stackButtons: true,
           cancel: true,
           persistent: true,
         })
         .onOk(() => {
-          //this.idbDeleteNote(id);
+          this.idbDeleteFolder(id);
+          this.idbDeleteAllNotes(id.toString());
         })
         .onOk(() => {})
         .onCancel(() => {

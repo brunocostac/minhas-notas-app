@@ -28,8 +28,8 @@ const actions = {
             dispatch('idbReadNotes')
         })
     },
-    idbUpdateNote({ dispatch }, payload) {
-        db.collection('notes').doc({ id: payload.id }).update({
+    idbSetNote({ dispatch }, payload) {
+        db.collection('notes').doc({ id: payload.id }).set({
             noteTitle: payload.noteTitle,
             noteBody: payload.noteBody,
             folderId: payload.folderId,
@@ -42,6 +42,14 @@ const actions = {
     },
     idbDeleteNote({ dispatch }, payload) {
         db.collection('notes').doc({ id: payload }).delete().then(response => {
+            console.log('Delete successful, now do something.')
+            dispatch('idbReadNotes')
+        }).catch(error => {
+            console.log('There was an error, do something else.')
+        })
+    },
+    idbDeleteAllNotes({ dispatch }, payload) {
+        db.collection('notes').doc({ folderId: payload }).delete().then(response => {
             console.log('Delete successful, now do something.')
             dispatch('idbReadNotes')
         }).catch(error => {

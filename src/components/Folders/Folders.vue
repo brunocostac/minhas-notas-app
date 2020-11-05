@@ -120,7 +120,9 @@ export default {
           this.idbDeleteFolder(id);
           this.idbDeleteAllNotes(id.toString());
         })
-        .onOk(() => {})
+        .onOk(() => {
+          this.$router.push('/')
+        })
         .onCancel(() => {
           this.finalize(reset);
         });

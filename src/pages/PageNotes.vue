@@ -9,7 +9,7 @@
         <h5 class="text-h5 text-weight-bold on-right">
           {{ this.selectedFolder.name }}
         </h5>
-        <q-list bordered separator>
+        <q-list v-if="Object.keys(folderNotes).length" bordered separator>
           <q-slide-item
             @right="(opt) => onRight(opt, note.id)"
             right-color="red"
@@ -34,6 +34,12 @@
             </q-item>
           </q-slide-item>
         </q-list>
+        <q-banner v-else class="absolute-center">
+          <template v-slot:avatar>
+            <q-icon name="sentiment_dissatisfied" color="primary" />
+          </template>
+          <span class="text-grey-9">Nenhuma nota na pasta</span>
+        </q-banner>
         <q-footer align="justify" bordered class="bg-white text-primary">
           <q-btn
             class="float-left on-right text-grey-9"

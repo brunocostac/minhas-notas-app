@@ -2,6 +2,7 @@
   <div>
     <div class="q-pa-sm fixed-top-right on-left">
       <q-btn
+        v-if="Object.keys(folders).length"
         @click="showRadioButtons = !showRadioButtons"
         dense
         unelevated
@@ -12,7 +13,7 @@
       />
     </div>
     <h5 class="text-h5 text-weight-bold on-right">Pastas</h5>
-    <q-list bordered separator>
+    <q-list v-if="Object.keys(folders).length" bordered separator>
       <q-item
         v-for="folder in folders"
         :key="folder.id"

@@ -58,7 +58,7 @@
             size="12px"
             color="white"
             text-color="amber"
-            icon="add_comment"
+            icon="note_add"
           />
         </q-footer>
       </div>
